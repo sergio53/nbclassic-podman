@@ -2,6 +2,7 @@ alias m.='mcedit'
 alias rc='m. ~/.bash_aliases  && . ~/.bash_aliases'
 alias rc.='. ~/.bash_aliases'
 alias rc..='m. -v ~/.bash_aliases'
+alias b.='m. ~/.bashrc && . ~/.bashrc'
 
 alias a..='alias'
 alias a.='a.. | grep'
@@ -10,7 +11,6 @@ alias e.='exit'
 alias g.='git clone'
 alias h.='htop'
 alias w.='wget'
-alias PATH.='echo $PATH'
 alias n..='sudo netstat -ntlp4'
 alias n.='n.. | grep'
 
@@ -32,10 +32,8 @@ forest () {
   fi
 }
 
-# ___________________________________________________________
-
 alias pod.='podman'
-#alias pod.login='pod. login --username ******** --password ********** docker.io'
+#alias pod.login='pod. login --username ****** --password ******** docker.io'
 
 # functions:
 # ---------
@@ -71,7 +69,8 @@ alias nbclassic.run='uid=1000;gid=100; dir=nbclassic; \
     subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
     subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
     mkdir -p ~/podmans_DIR/$dir \
-    && podman run --name $dir -itd -p $2:8888 -p $3:8866 \
+    && podman run --name $dir -itd --network host \
+    -e JUPYTER_PORT=8888 -e VOILA_PORT=8866 \
     -v ~/podmans_DIR/$dir:/home/jovyan --user $uid:$gid \
     --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
     --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
@@ -89,8 +88,8 @@ alias nbclassic.token='jupyter.token nbclassic'
 # functions:
 # ---------
 nbclassic. () {
-  if [ $# -eq 0 ]; then
-    nbclassic. nbclassic 8888 8866
+  if [ $# -lt 3 ]; then
+    echo "nbclassic. CONTAINER_NAME  JUPYTER_PORT VOILA_PORT"
   else
     uid=1000; gid=100; \
     subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
