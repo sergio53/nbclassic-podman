@@ -101,6 +101,7 @@ nbclassic. () {
     --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
     localhost/nbclassic
   fi
+  pod. ps -a --sort created
 }
 
 #.
