@@ -2,7 +2,6 @@ alias m.='mcedit'
 alias rc='m. ~/.bash_aliases  && . ~/.bash_aliases'
 alias rc.='. ~/.bash_aliases'
 alias rc..='m. -v ~/.bash_aliases'
-alias b.='m. ~/.bashrc && . ~/.bashrc'
 
 alias a..='alias'
 alias a.='a.. | grep'
@@ -11,8 +10,7 @@ alias e.='exit'
 alias g.='git clone'
 alias h.='htop'
 alias w.='wget'
-alias PATH='echo $PATH'
-alias p.='ping krdr.sytes.net -i'
+alias PATH.='echo $PATH'
 alias n..='sudo netstat -ntlp4'
 alias n.='n.. | grep'
 
@@ -36,17 +34,8 @@ forest () {
 
 # ___________________________________________________________
 
-alias off.='echo "Погасить дисплей"; sudo vbetool dpms off'
-alias on.='echo "Включить дисплей";  sudo vbetool dpms on'
-alias sctl.='sudo systemctl'
-alias susp.='echo "Усыпить"; sctl. suspend'
-alias hiber.='echo "Анабиоз"; sctl. hibernate'
-alias reboot.='echo "Перезагузить"; sctl. reboot'
-alias poff.='echo "Выключить питание"; sctl. poweroff'
-# ___________________________________________________________
-
 alias pod.='podman'
-alias pod.login='pod. login --username ******** --password ********** docker.io'
+#alias pod.login='pod. login --username ******** --password ********** docker.io'
 
 # functions:
 # ---------
