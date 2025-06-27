@@ -4,3 +4,51 @@
 git clone https://github.com/sergio53/nbclassic-podman.git <br> 
 cd nbclassic-podman <br> 
 bash nbclassic.build.sh <br> 
+____
+<code>
+alias nbclassic.run='uid=1000;gid=100; dir=nbclassic; \
+    subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
+    subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
+    mkdir -p ~/podmans_DIR/$dir \
+    && podman run --name $dir -itd --network host \
+    -e JUPYTER_PORT=8888 -e VOILA_PORT=8866 \
+    -v ~/podmans_DIR/$dir:/home/jovyan --user $uid:$gid \
+    --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
+    --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
+    localhost/nbclassic'
+</code>
+
+<code>
+nbclassic. () {
+  if [ $# -lt 1 ]; then
+    echo "nbclassic. CONTAINER_NAMET"
+  else
+    uid=1000; gid=100
+    subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
+    subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
+    mkdir -p ~/podmans_DIR/NB_classic/$1
+    podman run --name $1 -itd --network=jupyter \
+      -v ~/podmans_DIR/NB_classic/$1:/home/jovyan --user $uid:$gid \
+      --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
+      --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
+      localhost/nbclassic
+    pod. ps -a --sort created
+    pod.exec $1 "jupyter server list"
+  fi
+}
+</code>
+
+<code>
+alias npm.run='pod. run -d --name npm  --network jupyter \
+    -p 7780:80 -p 7781:81 \
+     -v ~/.pods/npm/data:/data -v ~/.pods/npm/letsencrypt:/etc/letsencrypt \
+    docker.io/jc21/nginx-proxy-manager:latest'  
+</code>
+
+____
+podman network create jupyter <br>
+npm.run <br>
+nbclasiic. nb_ONE <br>
+nbclasiic. nb_TWO <br>
+nbclasiic. nb_THREE <br>
+... <br>
