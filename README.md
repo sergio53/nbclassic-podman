@@ -21,7 +21,7 @@ alias nbclassic.run='uid=1000;gid=100; dir=nbclassic; \
 <code>
 nbclassic. () {
   if [ $# -lt 1 ]; then
-    echo "nbclassic. CONTAINER_NAMET"
+    echo "nbclassic. CONTAINER_NAME"
   else
     uid=1000; gid=100
     subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
