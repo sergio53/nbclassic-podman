@@ -6,16 +6,17 @@ cd nbclassic-podman <br>
 bash nbclassic.build.sh <br> 
 ____
 <code>
-alias nbclassic.run='uid=1000;gid=100; dir=nbclassic; \
-    subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
-    subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 )); \
-    mkdir -p ~/podmans_DIR/$dir \
-    && podman run --name $dir -itd --network host \
-    -e JUPYTER_PORT=8888 -e VOILA_PORT=8866 \
-    -v ~/podmans_DIR/$dir:/home/jovyan --user $uid:$gid \
-    --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
-    --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
-    localhost/nbclassic'
+alias nbclassic.run='uid=1000;gid=100; dir=nbclassic
+    subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
+    subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
+    mkdir -p ~/podmans_DIR/$dir
+    podman run --name $dir -itd --network host \
+      -e JUPYTER_PORT=8888 -e VOILA_PORT=8866 \
+      -v ~/podmans_DIR/$dir:/home/jovyan --user $uid:$gid \
+      --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
+      --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
+      localhost/nbclassic
+      podman ps -a --sort created'
 </code>
 
 <code>
@@ -39,13 +40,18 @@ nbclassic. () {
 </code>
 
 <code>
-alias npm.run='pod. run -d --name npm  --network jupyter \
-    -p 7780:80 -p 7781:81 \
-     -v ~/.pods/npm/data:/data -v ~/.pods/npm/letsencrypt:/etc/letsencrypt \
-    docker.io/jc21/nginx-proxy-manager:latest'  
+alias npm.run='
+    mkdir -p ~/podmans_DIR/npm/data
+    mkdir -p ~/podmans_DIR/npm/letsencrypt
+    podman run -d --name npm  --network jupyter \
+      -p 7780:80 -p 7781:81 \
+      -v ~/podmans_DIR/npm/data:/data -v ~/podmans_DIR/npm/letsencrypt:/etc/letsencrypt \
+      docker.io/jc21/nginx-proxy-manager:latest
+    podman ps -a --sort created'
 </code>
 
 ____
+
 podman network create jupyter <br>
 npm.run <br>
 nbclasiic. nb_ONE <br>
