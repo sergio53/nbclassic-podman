@@ -1,12 +1,13 @@
 ### Jupyter-NBCLASSIC and Voila Podman-image builder 
 ####  + nbextensions + nbextensions_configurator
+________
+```
+git clone https://github.com/sergio53/nbclassic-podman.git
+cd nbclassic-podman
+bash nbclassic.build.sh
+```
 
-git clone https://github.com/sergio53/nbclassic-podman.git <br> 
-cd nbclassic-podman <br> 
-bash nbclassic.build.sh <br> 
-____
-
-<code>
+```
 alias nbclassic.run='uid=1000;gid=100; dir=nbclassic
     subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
     subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
@@ -18,9 +19,8 @@ alias nbclassic.run='uid=1000;gid=100; dir=nbclassic
       --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
       localhost/nbclassic
       podman ps -a --sort created'
-</code>
-
-<code>
+```
+```
 nbclassic. () {
   if [ $# -lt 1 ]; then
     echo "nbclassic. CONTAINER_NAME"
@@ -38,9 +38,9 @@ nbclassic. () {
     pod.exec $1 "jupyter server list"
   fi
 }
-</code>
+```
 
-<code>
+```
 alias npm.run='
     mkdir -p ~/podmans_DIR/npm/data
     mkdir -p ~/podmans_DIR/npm/letsencrypt
@@ -49,13 +49,13 @@ alias npm.run='
       -v ~/podmans_DIR/npm/data:/data -v ~/podmans_DIR/npm/letsencrypt:/etc/letsencrypt \
       docker.io/jc21/nginx-proxy-manager:latest
     podman ps -a --sort created'
-</code>
+```
 
-____
-
-podman network create jupyter <br>
-npm.run <br>
-nbclasiic. nb_ONE <br>
-nbclasiic. nb_TWO <br>
-nbclasiic. nb_THREE <br>
-... <br>
+```
+nbclasiic.run
+podman network create jupyter
+npm.run
+nbclasiic. nb_ONE
+nbclasiic. nb_TWO
+nbclasiic. nb_THREE
+```
