@@ -5,6 +5,7 @@ git clone https://github.com/sergio53/nbclassic-podman.git <br>
 cd nbclassic-podman <br> 
 bash nbclassic.build.sh <br> 
 ____
+
 <code>
 alias nbclassic.run='uid=1000;gid=100; dir=nbclassic
     subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
