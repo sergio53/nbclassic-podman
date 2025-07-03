@@ -30,7 +30,7 @@ RUN mamba install --yes \
     rm -rf "/home/${NB_USER}/.cache/yarn" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}" && \
-    pip install jupyter-full-width
+    pip install jupyter-full-width nbextension-cellfolding
 
 ENV JUPYTER_PORT=8888
 ENV VOILA_PORT=8866

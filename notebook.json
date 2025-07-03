@@ -8,7 +8,8 @@
     "hinterland/hinterland": true,
     "autosavetime/main": true,
     "full_width/full_width": true,
-    "freeze/main": true
+    "freeze/main": true,
+    "cellfolding/index": true
   },
   "CodeCell": {
     "cm_config": {
