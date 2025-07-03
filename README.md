@@ -58,6 +58,11 @@ alias python.run='
     docker.io/library/python:3.11.6
   podman ps -a --sort created'
 ```
+```
+python. () {
+  pod.exec python bash -c "$python ~/$1"
+}
+```
 ________
 ```
 nbclasiic.run
