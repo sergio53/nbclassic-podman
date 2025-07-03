@@ -50,11 +50,21 @@ alias npm.run='
       docker.io/jc21/nginx-proxy-manager:latest
     podman ps -a --sort created'
 ```
-
+```
+alias python.run='
+  mkdir -p ~/podmans_DIR/python
+  podman run -d --name python --network jupyter \
+    -v ~/podmans_DIR/python:/root \
+    docker.io/library/python:3.11.6
+  podman ps -a --sort created'
+```
+________
 ```
 nbclasiic.run
+
 podman network create jupyter
 npm.run
+python.run
 nbclasiic. nb_ONE
 nbclasiic. nb_TWO
 nbclasiic. nb_THREE
