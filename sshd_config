@@ -1,0 +1,15 @@
+Port 22
+Protocol 2
+
+PasswordAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+PermitRootLogin no
+
+AllowAgentForwarding no
+AllowTcpForwarding yes
+GatewayPorts yes
+X11Forwarding no
+
+PermitTTY no
+ForceCommand /bin/false
