@@ -39,37 +39,12 @@ nbclassic. () {
   fi
 }
 ```
-
-```
-alias npm.run='
-    mkdir -p ~/podmans_DIR/npm/data
-    mkdir -p ~/podmans_DIR/npm/letsencrypt
-    podman run -d --name npm  --network jupyter \
-      -p 7780:80 -p 7781:81 \
-      -v ~/podmans_DIR/npm/data:/data -v ~/podmans_DIR/npm/letsencrypt:/etc/letsencrypt \
-      docker.io/jc21/nginx-proxy-manager:latest
-    podman ps -a --sort created'
-```
-```
-alias python.run='
-  mkdir -p ~/podmans_DIR/python
-  podman run -d --name python --network jupyter \
-    -v ~/podmans_DIR/python:/root \
-    docker.io/library/python:3.11.6
-  podman ps -a --sort created'
-```
-```
-python. () {
-  pod.exec python bash -c "$python ~/$1"
-}
-```
 ________
 ```
 nbclasiic.run
 
 podman network create jupyter
-npm.run
-python.run
+
 nbclasiic. nb_ONE
 nbclasiic. nb_TWO
 nbclasiic. nb_THREE
