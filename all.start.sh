@@ -1,2 +1,3 @@
 #!/bin/bash
-nbclassic.start.sh && voila.start.sh
+nbclassic.start.sh
+#voila.start.sh
