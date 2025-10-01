@@ -6,7 +6,12 @@ git clone https://github.com/sergio53/nbclassic-podman.git
 cd nbclassic-podman
 bash nbclassic.build.sh
 ```
-
+```
+alias pod.='podman'
+pod.exec () {
+  pod. exec -ti $1 ${@:2}
+}
+```
 ```
 alias nbclassic.run='uid=1000;gid=100; dir=nbclassic
     subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
@@ -39,12 +44,16 @@ nbclassic. () {
   fi
 }
 ```
+```
+alias sshd.='pod. run --name gate -d -p 9222:22 --network jupyter -e USER=tunneluser -e PASSWORD=*********************** \
+  localhost/sshd:latest && pod. ps -a --sort created'
+```
 ________
 ```
 nbclasiic.run
 
 podman network create jupyter
-
+sshd.
 nbclasiic. nb_ONE
 nbclasiic. nb_TWO
 nbclasiic. nb_THREE
